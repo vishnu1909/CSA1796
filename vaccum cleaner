@@ -1,0 +1,45 @@
+# Define the grid world (0 represents a clean cell, 1 represents a dirty cell)
+grid = [[0, 1],
+        [1, 0]]
+
+# Initialize the vacuum cleaner position at (0, 0)
+row, col = 0, 0
+
+# Function to print the grid world
+def print_grid():
+    for i in range(2):
+        for j in range(2):
+            if grid[i][j] == 0:
+                print("Clean ", end='')
+            else:
+                print("Dirty ", end='')
+        print()
+
+# Main loop for the vacuum cleaner
+def vacuum_cleaner():
+    global row, col  # Declare row and col as global variables
+
+    while any(1 in row for row in grid):
+        print("Current position: ({}, {})".format(row, col))
+
+        # Clean the current cell if it's dirty
+        if grid[row][col] == 1:
+            print("Cleaning the current cell...")
+            grid[row][col] = 0
+
+        # Move to the next cell
+        col = (col + 1) % 2  # Move to the next column
+        if col == 0:
+            row = (row + 1) % 2  # Move to the next row
+
+        print("Moving to the next cell.")
+        print_grid()
+        print("-------------------------------")
+
+    print("Grid is clean. Vacuum cleaner task completed.")
+
+# Start the vacuum cleaner
+print("Initial Grid:")
+print_grid()
+print("-------------------------------")
+vacuum_cleaner()
