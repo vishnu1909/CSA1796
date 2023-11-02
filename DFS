@@ -1,0 +1,24 @@
+def dfs(graph, start):
+    visited = set()
+    stack = [start]
+
+    while stack:
+        vertex = stack.pop()
+
+        if vertex not in visited:
+            print(vertex, end=' ')
+            visited.add(vertex)
+            stack.extend(graph[vertex] - visited)
+
+#main
+graph = {
+    'A': {'B', 'C'},
+    'B': {'A', 'D', 'E'},
+    'C': {'A', 'F'},
+    'D': {'B'},
+    'E': {'B', 'F'},
+    'F': {'C', 'E'}
+}
+
+print("Depth-First Traversal starting from 'A':")
+dfs(graph, 'A')
