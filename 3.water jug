@@ -1,0 +1,33 @@
+def water_jug_problem(capacity_jug1, capacity_jug2, target):
+    if target > capacity_jug1 and target > capacity_jug2:
+        return None
+
+    jug1 = 0
+    jug2 = 0
+    steps = 0
+
+    while jug1 != target and jug2 != target:
+        if jug1 == 0:
+            jug1 = capacity_jug1
+            steps += 1
+        elif jug2 == capacity_jug2:
+            jug2 = 0
+            steps += 1
+        else:
+            pour_amount = min(jug1, capacity_jug2 - jug2)
+            jug1 -= pour_amount
+            jug2 += pour_amount
+            steps += 1
+
+    return steps
+
+#main
+capacity_jug1 = 4
+capacity_jug2 = 3
+target = 2
+steps = water_jug_problem(capacity_jug1, capacity_jug2, target)
+
+if steps is not None:
+    print(f"Minimum number of steps to measure {target} liters: {steps}")
+else:
+    print(f"Target amount {target} liters cannot be measured with the given jug capacities.")
