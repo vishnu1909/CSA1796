@@ -1,0 +1,29 @@
+print("s vishnu vardhan 192110147")
+from itertools import permutations
+
+def is_solution(puzzle, solution):
+    send, more, money = puzzle
+    s, e, n, d = solution['S'], solution['E'], solution['N'], solution['D']
+    m, o, r, y = solution['M'], solution['O'], solution['R'], solution['Y']
+    if s == 0 or m == 0:
+        return False
+    return s * 1000 + e * 100 + n * 10 + d + m * 1000 + o * 100 + r * 10 + e == m * 10000 + o * 1000 + n * 100 + e * 10 + y
+
+def solve_cryptarithmetic(puzzle):
+    letters = set(''.join(puzzle))
+    if len(letters) > 10:
+        return None
+
+    for perm in permutations(range(10), len(letters)):
+        solution = dict(zip(letters, perm))
+        if is_solution(puzzle, solution):
+            return solution
+
+    return None 
+puzzle = ['SEND', 'MORE', 'MONEY']
+solution = solve_cryptarithmetic(puzzle)
+if solution:
+    for word in puzzle:
+        print(''.join(str(solution[letter]) for letter in word))
+else:
+    print("No solution found.")
