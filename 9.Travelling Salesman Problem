@@ -1,0 +1,37 @@
+print("s vishnu vardhan 192110147")
+def calculate_total_distance(path, distances):
+    total_distance = 0
+    for i in range(len(path) - 1):
+        total_distance += distances[path[i]][path[i + 1]]
+    total_distance += distances[path[-1]][path[0]]
+    return total_distance
+
+def nearest_neighbor_tsp(distances):
+    num_cities = len(distances)
+    unvisited_cities = set(range(num_cities))
+    current_city = 0  # Start from city 0
+    tour = [current_city]
+    unvisited_cities.remove(current_city)
+
+    while unvisited_cities:
+        nearest_city = min(unvisited_cities, key=lambda city: distances[current_city][city])
+        tour.append(nearest_city)
+        current_city = nearest_city
+        unvisited_cities.remove(current_city)
+
+    tour.append(tour[0])  # Return to the starting city
+    total_distance = calculate_total_distance(tour, distances)
+
+    return tour, total_distance
+
+# Example usage
+distances = [
+    [0, 29, 20, 21],
+    [29, 0, 15, 16],
+    [20, 15, 0, 28],
+    [21, 16, 28, 0]
+]
+
+optimal_path, min_distance = nearest_neighbor_tsp(distances)
+print("Optimal Path:", optimal_path)
+print("Minimum Distance:", min_distance)
