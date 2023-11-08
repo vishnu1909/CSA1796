@@ -1,0 +1,59 @@
+print("s vishnu vardhan 192110147")
+def is_safe(node, color, coloring, graph):
+    for neighbor in graph[node]:
+        if neighbor in coloring and coloring[neighbor] == color:
+            return False
+    return True
+
+def solve_map_coloring(graph, colors, coloring, node):
+    if node is None:
+        return True
+
+    for color in colors:
+        if is_safe(node, color, coloring, graph):
+            coloring[node] = color
+
+            if solve_map_coloring(graph, colors, coloring, get_uncolored_node(graph, coloring)):
+                return True
+
+            del coloring[node]
+
+    return False
+
+def get_uncolored_node(graph, coloring):
+    for node in graph:
+        if node not in coloring:
+            return node
+    return None
+
+def map_coloring(graph, colors):
+    coloring = {}
+    start_node = get_uncolored_node(graph, coloring)
+    
+    if start_node is None:
+        return coloring
+
+    if solve_map_coloring(graph, colors, coloring, start_node):
+        return coloring
+    else:
+        return None
+
+# Example usage:
+if __name__ == "__main__":
+    us_map = {
+        'WA': ['OR', 'ID'],
+        'OR': ['WA', 'ID', 'CA'],
+        'CA': ['OR', 'ID'],
+        'ID': ['WA', 'OR', 'CA'],
+    }
+    
+    available_colors = ['Red', 'Green', 'Blue']
+    
+    solution = map_coloring(us_map, available_colors)
+    
+    if solution:
+        print("Map Coloring Solution:")
+        for node, color in solution.items():
+            print(f"{node}: {color}")
+    else:
+        print("No solution exists.")
