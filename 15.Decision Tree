@@ -1,0 +1,31 @@
+print("s vishnu vardhan 192110147")
+import math
+def minimax_alpha_beta(node, depth, alpha, beta, maximizing_player):
+    if depth == 0 or node_is_terminal(node):
+        return evaluate_node(node)
+    if maximizing_player:
+        value = -math.inf
+        for child in generate_children(node):
+            value = max(value, minimax_alpha_beta(child, depth - 1, alpha, beta, False))
+            alpha = max(alpha, value)
+            if beta <= alpha:
+                break  
+        return value
+    else:
+        value = math.inf
+        for child in generate_children(node):
+            value = min(value, minimax_alpha_beta(child, depth - 1, alpha, beta, True))
+            beta = min(beta, value)
+            if beta <= alpha:
+                break
+        return value
+def node_is_terminal(node):
+    return True
+def evaluate_node(node):
+    return 0
+def generate_children(node):
+    return []
+initial_node = "Root"
+max_depth = 5          
+result = minimax_alpha_beta(initial_node, max_depth, -math.inf, math.inf, True)
+print("Optimal value:", result)
